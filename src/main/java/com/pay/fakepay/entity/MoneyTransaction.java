@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,6 +17,28 @@ import javax.validation.constraints.NotNull;
  * @author Ben
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(
+        name="MoneyTransaction.byReceipientId", 
+        query="SELECT t FROM MoneyTransaction t "
+                + "WHERE t.recipient = :recipientId "
+                + "AND t.pending = false"),
+    @NamedQuery(
+            name="MoneyTransaction.bySenderId",
+            query="SELECT t FROM MoneyTransaction t "
+                    + "WHERE t.sender = :senderId "
+                    + "AND t.pending = false"),
+    @NamedQuery(
+            name="MoneyTransaction.byUsername",
+            query="SELECT t FROM MoneyTransaction t "
+                    + "WHERE t.recipient.username = :username "
+                    + "OR t.sender.username = :username "
+                    + "AND t.pending = false"),
+    @NamedQuery(
+        name="MoneyTransaction.findAll",
+        query="SELECT t FROM MoneyTransaction t "
+                + "WHERE t.pending = false")
+})
 public class MoneyTransaction implements Serializable {
     
     @Id
