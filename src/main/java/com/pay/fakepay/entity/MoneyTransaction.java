@@ -35,17 +35,17 @@ public class MoneyTransaction implements Serializable {
     private int amount;
     
     @NotNull
-    private boolean accepted;
+    private boolean pending;
 
     public MoneyTransaction(
             SystemUser sender, 
             SystemUser recipient, 
             int amount,
-            boolean accepted) {
+            boolean pending) {
         this.sender = sender;
         this.recipient = recipient;
         this.amount = amount;
-        this.accepted = accepted;
+        this.pending = pending;
     }
     
     public MoneyTransaction(
@@ -55,7 +55,7 @@ public class MoneyTransaction implements Serializable {
         this.sender = sender;
         this.recipient = recipient;
         this.amount = amount;
-        this.accepted = false;
+        this.pending = true;
     }    
     public MoneyTransaction() { }
 
@@ -91,12 +91,12 @@ public class MoneyTransaction implements Serializable {
         this.amount = amount;
     }
 
-    public boolean isAccepted() {
-        return accepted;
+    public boolean isPending() {
+        return pending;
     }
 
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
+    public void setPending(boolean pending) {
+        this.pending = pending;
     }
 
     @Override
