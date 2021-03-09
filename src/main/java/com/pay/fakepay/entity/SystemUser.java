@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -18,6 +20,17 @@ import javax.validation.constraints.NotNull;
  * @author Ben
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(
+            name="SystemUser.countByName", 
+            query="SELECT COUNT(u) FROM SystemUser u "
+                    + "WHERE u.username = :username"),
+    @NamedQuery(
+            name="SystemUser.getUser",
+            query="SELECT u FROM SystemUser u "
+                    + "WHERE u.username = :username")
+})
+
 public class SystemUser implements Serializable {
     
     @Id
