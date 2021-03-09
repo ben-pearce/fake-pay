@@ -8,6 +8,22 @@
     <h:body>
         <h2>Welcome to your account</h2>
         <hr/>
+        <h3>Overview</h3>
+        <h:panelGrid columns="2" border="0" cellpadding="10">
+            <h:outputText value="Username:" style="font-weight: bold"/>
+            <h:outputText value="#{userBean.user.username}"/>
+            
+            <h:outputText value="Full name:" style="font-weight: bold"/>
+            <h:outputText value="#{userBean.user.name} #{userBean.user.surname}"/>
+            
+            <h:outputText value="Balance:" style="font-weight: bold"/>
+            <h:panelGroup>
+                <h:outputText value="£"/>
+                <h:outputText value="#{userBean.user.balance}"/>
+            </h:panelGroup>
+        </h:panelGrid>
+        
+        <h3>Links</h3>
         <ul>
             <li>
                 <h:link value="View Transactions" outcome="transactions"/>
