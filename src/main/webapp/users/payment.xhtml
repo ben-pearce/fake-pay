@@ -1,16 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-        <title>TODO supply a title</title>
+        <title>Make Payment - FakePay</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <div>TODO write content</div>
+        <h2>Make Payment</h2>
+        <hr/>
+        <h:form id="payment">
+            <h:panelGrid columns="2" border="0" cellpadding="10">
+                <h:outputLabel for="username" value="Recipient User:"/>
+                <h:panelGroup>
+                    <h:inputText 
+                        id="username" 
+                        size="20"
+                        value="#{paymentBean.username}"
+                        required="true" 
+                        requiredMessage="Mandatory Field"/>
+                    <br/>
+                    <h:message style="color:red" for="username"/>
+                </h:panelGroup>
+                
+                <h:outputLabel for="amount" value="Amount:"/>
+                <h:panelGroup>
+                    <h:outputText value="£" />
+                    <h:inputText 
+                        id="amount"
+                        size="20" 
+                        value="#{paymentBean.amount}"
+                        required="true" 
+                        requiredMessage="Mandatory Field"/>
+                    <br/>
+                    <h:message style="color:red" for="amount"/>
+                </h:panelGroup>
+
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block;float:right;">
+                        <h:commandButton 
+                            id="submit" 
+                            type="submit" 
+                            action="#{paymentBean.pay}"
+                            value="Send Payment"/>
+                        <h:commandButton 
+                            id="reset" 
+                            type="reset" 
+                            value="Reset"/>
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+        <hr/>
+        <h:link value="Back to account" outcome="user"/>
     </body>
 </html>
