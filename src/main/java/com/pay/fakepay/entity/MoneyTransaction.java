@@ -46,12 +46,12 @@ public class MoneyTransaction implements Serializable {
     private Long id;
     
     @NotNull
-    @JoinColumn(name="sender_id", referencedColumnName="id")
+    @JoinColumn(name="sender_username", referencedColumnName="username")
     @ManyToOne
     private SystemUser sender;
     
     @NotNull
-    @JoinColumn(name="recipient_id", referencedColumnName="id")
+    @JoinColumn(name="recipient_username", referencedColumnName="username")
     @ManyToOne
     private SystemUser recipient;
     
