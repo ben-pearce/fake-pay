@@ -9,21 +9,45 @@
     <body>
         <h2>Login</h2>
         <hr/>
-        <form action="j_security_check" name="loginForm">
+        <h:form 
+            id="login" 
+            onsubmit="action='j_security_check'" 
+            prependId="false">
             <h:panelGrid columns="2" border="0" cellpadding="10">
-                <h:outputLabel value="Username:"/>
-                <input type="text" name="j_username" size="20"/>
-                <h:outputLabel value="Password:"/>
-                <input type="password" name="j_password" size="20"/>
+                <h:outputLabel for="j_username" value="Username:"/>
+                <h:panelGroup>
+                    <h:inputText 
+                        id="j_username" 
+                        size="20"
+                        required="true" 
+                        requiredMessage="Mandatory Field"/>
+                    <h:message style="color:red" for="j_username"/>
+                </h:panelGroup>
                 
+                <h:outputLabel for="j_password" value="Password:"/>
+                <h:panelGroup>
+                    <h:inputSecret 
+                        id="j_password" 
+                        size="20" 
+                        required="true" 
+                        requiredMessage="Mandatory Field"/>
+                    <h:message style="color:red" for="j_password"/>
+                </h:panelGroup>
+
                 <f:facet name="footer">
                     <h:panelGroup style="display:block;float:right;">
-                        <button value="Submit" type="submit">Submit</button>
-                        <button value="Reset" type="reset">Reset</button>
+                        <h:commandButton 
+                            id="submit" 
+                            type="submit" 
+                            value="Login"/>
+                        <h:commandButton 
+                            id="reset" 
+                            type="reset" 
+                            value="Reset"/>
                     </h:panelGroup>
                 </f:facet>
             </h:panelGrid>
-        </form>
+        </h:form>
         <hr/>
         <h:link value="Back" outcome="index"/>
     </body>
