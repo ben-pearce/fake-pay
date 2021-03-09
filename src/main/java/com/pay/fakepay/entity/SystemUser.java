@@ -37,14 +37,14 @@ public class SystemUser implements Serializable {
     String surname;
     
     @NotNull
-    int balance;
+    float balance;
 
     public SystemUser(
             String username, 
             String userpassword,
             String name, 
             String surname,
-            int balance) {
+            float balance) {
         this.username = username;
         this.userpassword = userpassword;
         this.name = name;
@@ -106,11 +106,11 @@ public class SystemUser implements Serializable {
         this.surname = surname;
     }
 
-    public int getBalance() {
+    public float getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 

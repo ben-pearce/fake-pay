@@ -32,7 +32,7 @@ public class MoneyTransaction implements Serializable {
     private SystemUser recipient;
     
     @NotNull
-    private int amount;
+    private float amount;
     
     @NotNull
     private boolean pending;
@@ -40,7 +40,7 @@ public class MoneyTransaction implements Serializable {
     public MoneyTransaction(
             SystemUser sender, 
             SystemUser recipient, 
-            int amount,
+            float amount,
             boolean pending) {
         this.sender = sender;
         this.recipient = recipient;
@@ -83,7 +83,7 @@ public class MoneyTransaction implements Serializable {
         this.recipient = recipient;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
