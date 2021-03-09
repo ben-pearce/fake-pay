@@ -5,38 +5,30 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-/**
- *
- * @author parisis
- */
 @Named
-@RequestScoped
-public class RegistrationBean {
+@RequestScoped public class RegistrationBean {
 
     @EJB
-    UserService usrSrv;
+    UserService userService;
     
     String username;
     String userpassword;
     String name;
     String surname;
 
-    public RegistrationBean() {
+    public RegistrationBean() { }
 
-    }
-
-    //call the injected EJB
     public String register() {
-        usrSrv.registerUser(username, userpassword, name, surname);
+        userService.register(username, userpassword, name, surname);
         return "index";
     }
     
-    public UserService getUsrSrv() {
-        return usrSrv;
+    public UserService getUserService() {
+        return userService;
     }
 
-    public void setUsrSrv(UserService usrSrv) {
-        this.usrSrv = usrSrv;
+    public void setUserService(UserService usrSrv) {
+        this.userService = usrSrv;
     }
 
     public String getUsername() {
@@ -70,6 +62,4 @@ public class RegistrationBean {
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
-    
 }

@@ -12,10 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author Ben
- */
+
 @Entity
 @NamedQueries({
     @NamedQuery(
@@ -149,6 +146,4 @@ public class MoneyTransaction implements Serializable {
         }
         return true;
     }
-    
-    
 }
