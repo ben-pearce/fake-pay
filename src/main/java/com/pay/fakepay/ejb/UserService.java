@@ -1,5 +1,6 @@
 package com.pay.fakepay.ejb;
 
+import com.pay.fakepay.entity.MoneyTransaction;
 import com.pay.fakepay.entity.SystemUser;
 import com.pay.fakepay.entity.SystemUserGroup;
 import java.io.UnsupportedEncodingException;
@@ -51,4 +52,10 @@ public class UserService {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-}
+    
+    public List<MoneyTransaction> getTransactions(String username) {
+        Query query = em.createNamedQuery("MoneyTransaction.byUsername");
+        query.setParameter("username", username);
+        return query.getResultList();
+    }
+    
