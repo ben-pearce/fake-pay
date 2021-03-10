@@ -68,10 +68,7 @@ public class SystemUserGroup implements Serializable {
             return false;
         }
         final SystemUserGroup other = (SystemUserGroup) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
     
     

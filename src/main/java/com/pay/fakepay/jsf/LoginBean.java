@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Named
-@RequestScoped
-public class LoginBean implements Serializable {
+@RequestScoped public class LoginBean implements Serializable {
 
     public void logout() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -21,7 +20,6 @@ public class LoginBean implements Serializable {
         try {
             request.logout();
             response.sendRedirect("../index.xhtml");
-            //context.addMessage(null, new FacesMessage("User is logged out"));
         } catch (ServletException | IOException e) {
             context.addMessage(null, new FacesMessage("Logout failed."));
         }
