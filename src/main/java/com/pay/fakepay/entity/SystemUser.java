@@ -1,5 +1,6 @@
 package com.pay.fakepay.entity;
 
+import com.pay.fakepay.Currency;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -45,17 +46,22 @@ public class SystemUser implements Serializable {
     
     @NotNull
     float balance;
-
+    
+    @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    Currency currency;
     public SystemUser(
             String username, 
             String userpassword,
             String name, 
             String surname,
+            Currency currency,
             float balance) {
         this.username = username;
         this.userpassword = userpassword;
         this.name = name;
         this.surname = surname;
+        this.currency = currency;
         this.balance = balance;
     }
     
@@ -63,11 +69,13 @@ public class SystemUser implements Serializable {
             String username, 
             String userpassword,
             String name, 
-            String surname) {
+            String surname,
+            Currency currency) {
         this.username = username;
         this.userpassword = userpassword;
         this.name = name;
         this.surname = surname;
+        this.currency = currency;
         this.balance = 1000;
     }
     
@@ -119,6 +127,14 @@ public class SystemUser implements Serializable {
 
     public void setBalance(float balance) {
         this.balance = balance;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override
