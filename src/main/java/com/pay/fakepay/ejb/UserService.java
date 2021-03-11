@@ -1,5 +1,6 @@
 package com.pay.fakepay.ejb;
 
+import com.pay.fakepay.Currency;
 import com.pay.fakepay.entity.MoneyTransaction;
 import com.pay.fakepay.entity.SystemUser;
 import com.pay.fakepay.entity.SystemUserGroup;
@@ -26,11 +27,12 @@ import javax.persistence.Query;
             String username,
             String userpassword, 
             String name, 
-            String surname) {
+            String surname,
+            String currency) {
         try {
             SystemUser sysUser;
             SystemUserGroup sysUserGroup;
-
+            
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             String passwd = userpassword;
             md.update(passwd.getBytes("UTF-8"));
@@ -39,8 +41,15 @@ import javax.persistence.Query;
             for (int i = 0; i < digest.length; i++) {
                 sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
             }
-            String paswdToStoreInDB = sb.toString();
-            sysUser = new SystemUser(username, paswdToStoreInDB, name, surname);
+            String password = sb.toString();
+            Currency userCurrency = Currency.valueOf(currency);
+            sysUser = new SystemUser(
+                    username, 
+                    password, 
+                    name, 
+                    surname,
+                    userCurrency
+            );
             sysUserGroup = new SystemUserGroup(username, "users");
 
             em.persist(sysUser);
