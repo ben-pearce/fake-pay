@@ -62,6 +62,24 @@
                     <br/>
                     <h:message style="color:red" for="surname"/>
                 </h:panelGroup>
+                
+                <h:outputLabel for="currency" value="Currency:"/>
+                <h:panelGroup>
+                    <h:selectOneMenu 
+                        id="currency" 
+                        value="#{registrationBean.currency}">
+                        <f:selectItem 
+                            itemValue="GBP"
+                            itemLabel="£ Pounds Sterling"/>
+                        <f:selectItem 
+                            itemValue="EUR" 
+                            itemLabel="€ Euro"/>
+                        <f:selectItem
+                            itemValue="USD" 
+                            itemLabel="$ United States Dollar"/>
+                    </h:selectOneMenu>
+                    <h:message style="color:red" for="currency"/>
+                </h:panelGroup>
 
                 <f:facet name="footer">
                     <h:panelGroup style="display:block;float:right;">
