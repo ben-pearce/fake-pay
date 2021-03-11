@@ -24,9 +24,10 @@
                     <h:message style="color:red" for="username"/>
                 </h:panelGroup>
                 
-                <h:outputLabel for="amount" value="Amount:"/>
+                <h:outputLabel 
+                    for="amount" 
+                    value="Amount [#{userBean.user.currency.symbol}]:"/>
                 <h:panelGroup>
-                    <h:outputText value="£" />
                     <h:inputText 
                         id="amount"
                         size="20" 
