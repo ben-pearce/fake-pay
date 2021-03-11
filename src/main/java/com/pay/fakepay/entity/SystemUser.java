@@ -5,11 +5,14 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 
@@ -50,6 +53,10 @@ public class SystemUser implements Serializable {
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     Currency currency;
+    
+    @Version
+    protected int version;
+
     public SystemUser(
             String username, 
             String userpassword,
@@ -137,6 +144,10 @@ public class SystemUser implements Serializable {
         this.currency = currency;
     }
 
+    public int getVersion() {
+        return version;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
