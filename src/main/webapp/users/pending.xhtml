@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Pending Transactions - FakePay</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h2>Pending Transactions</h2>
+        <hr/>
+        
+        <h3>Incoming</h3>
+        <h:dataTable 
+            value="#{userBean.transactions}" 
+            var="transaction"
+            border="1" 
+            cellpadding="10">
+            <h:column>
+                <f:facet name="header">Trans No.</f:facet>
+                <h:outputText value="#"/>#{transaction.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Sender ID</f:facet>
+                    #{transaction.sender.username}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Recipient ID</f:facet>
+                    #{transaction.recipient.username}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Amount</f:facet>
+                    <h:outputText value="£"/>#{transaction.amount}
+            </h:column>
+            <h:column>
+                <f:facet name="header"></f:facet>
+                <h:form>
+                    <h:inputHidden value="#{transaction.id}" id="transactionId"/>
+                    <h:commandButton value="Accept" style="margin-right: 5px;color:green"/>
+                    <h:commandButton value="Reject" style="color:red"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+        
+        <hr/>
+        <h3>Outgoing</h3>
+        <h:dataTable 
+            value="#{userBean.transactions}" 
+            var="transaction"
+            border="1" 
+            cellpadding="10">
+            <h:column>
+                <f:facet name="header">Trans No.</f:facet>
+                <h:outputText value="#"/>#{transaction.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Sender ID</f:facet>
+                    #{transaction.sender.username}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Recipient ID</f:facet>
+                    #{transaction.recipient.username}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Amount</f:facet>
+                    <h:outputText value="£"/>#{transaction.amount}
+            </h:column>
+        </h:dataTable>
+        
+        <hr/>
+        <h:link value="Back to account" outcome="user"/>
+    </body>
+</html>
