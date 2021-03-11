@@ -33,7 +33,8 @@ import javax.persistence.Query;
                     adminUser, 
                     adminPassword, 
                     adminUser, 
-                    adminUser);
+                    adminUser,
+                    "GBP");
             
             SystemUserGroup sysUserGroup = new SystemUserGroup(
                     adminUser, "admins");
