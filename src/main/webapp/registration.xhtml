@@ -82,18 +82,20 @@
                 </h:panelGroup>
 
                 <f:facet name="footer">
-                    <h:panelGroup style="display:block;float:right;">
+                    <h:panelGroup>
                         <h:commandButton 
+                            style="display:block;float:right"
                             id="register" 
                             type="submit" 
                             value="Register" 
                             action="#{registrationBean.register}" 
                             title="Register User"/>
                         <h:commandButton 
+                            style="display:block;float:left"
                             id="reset" 
                             type="reset"
-                            value="Reset Form"
-                            title="Reset Form"/>
+                            value="Reset"
+                            title="Reset"/>
                     </h:panelGroup>
                 </f:facet>
             </h:panelGrid>
