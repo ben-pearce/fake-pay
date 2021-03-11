@@ -15,11 +15,17 @@ import javax.inject.Named;
     String userpassword;
     String name;
     String surname;
+    String currency;
 
     public RegistrationBean() { }
 
     public String register() {
-        userService.register(username, userpassword, name, surname);
+        userService.register(
+                username, 
+                userpassword,
+                name, 
+                surname, 
+                currency);
         return "index";
     }
     
@@ -61,5 +67,13 @@ import javax.inject.Named;
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
