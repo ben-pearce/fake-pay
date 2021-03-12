@@ -1,8 +1,11 @@
 package com.pay.fakepay.entity;
 
+import com.pay.fakepay.Currency;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,26 +59,34 @@ public class MoneyTransaction implements Serializable {
     private float amount;
     
     @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    private Currency currency;
+    
+    @NotNull
     private boolean pending;
 
     public MoneyTransaction(
             SystemUser sender, 
             SystemUser recipient, 
             float amount,
+            Currency currency,
             boolean pending) {
         this.sender = sender;
         this.recipient = recipient;
         this.amount = amount;
+        this.currency = currency;
         this.pending = pending;
     }
     
     public MoneyTransaction(
             SystemUser sender, 
             SystemUser recipient, 
-            int amount) {
+            int amount,
+            Currency currency) {
         this.sender = sender;
         this.recipient = recipient;
         this.amount = amount;
+        this.currency = currency;
         this.pending = true;
     }    
     public MoneyTransaction() { }
@@ -110,6 +121,14 @@ public class MoneyTransaction implements Serializable {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     public boolean isPending() {
