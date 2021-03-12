@@ -27,7 +27,6 @@ import javax.validation.constraints.NotNull;
             query="SELECT u FROM SystemUser u "
                     + "WHERE u.username = :username")
 })
-
 public class SystemUser implements Serializable {
     
     @Id
