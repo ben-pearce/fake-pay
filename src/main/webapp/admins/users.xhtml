@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-        <title>TODO supply a title</title>
+        <title>Users - FakePay</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <div>TODO write content</div>
+        <h2>Users</h2>
+        <hr/>
+        
+        <h:dataTable 
+            value="" 
+            var="transaction"
+            border="1" 
+            cellpadding="10">
+            <h:column>
+                <f:facet name="header">User ID.</f:facet>
+                <h:outputText value="#"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Username</f:facet>
+                
+            </h:column>
+            <h:column>
+                <f:facet name="header">First Name</f:facet>
+                
+            </h:column>
+            <h:column>
+                <f:facet name="header">Last Name</f:facet>
+                
+            </h:column>
+            <h:column>
+                <f:facet name="header">Balance</f:facet>
+                <h:outputText value="£"/>
+            </h:column>
+        </h:dataTable>
+        
+        <hr/>
+        <h:link value="Back to admin area" outcome="admin"/>
     </body>
 </html>
