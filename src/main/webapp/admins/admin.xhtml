@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Admin Area - FakePay</title>
+    </h:head>
+    <h:body>
+        <h2>Administrator Area</h2>
+        <hr/>
+        <h3>Links</h3>
+        <ul>
+            <li>
+                <h:link value="View Users" outcome="users"/>
+            </li>
+            <li>
+                <h:link value="View User Transactions" outcome="transactions"/>
+            </li>
+            <li>
+                <h:link value="Register New Administrator" outcome="register"/>
+            </li>
+        </ul>
+        <hr/>
+        <h:form>
+            <h:commandLink value="Logout" action="#{loginBean.logout()}"/>
+            <h:link value="User account" outcome="user" style="float:right"/>
+        </h:form>
+    </h:body>
+</html>
