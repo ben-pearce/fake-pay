@@ -3,11 +3,14 @@ package com.pay.fakepay.ejb;
 import com.pay.fakepay.entity.MoneyTransaction;
 import com.pay.fakepay.entity.SystemUser;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 
+@TransactionAttribute(REQUIRED)
 @Stateless public class TransactionService {
     
     @PersistenceContext
