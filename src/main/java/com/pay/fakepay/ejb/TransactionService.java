@@ -30,6 +30,7 @@ import javax.persistence.Query;
                 sender, 
                 recipient, 
                 amount, 
+                recipient.getCurrency(),
                 false);
         
         sender.setBalance(sender.getBalance() - amount);
