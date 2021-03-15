@@ -12,29 +12,31 @@
         <hr/>
         
         <h:dataTable 
-            value="" 
-            var="transaction"
+            value="#{adminBean.users}" 
+            var="user"
             border="1" 
             cellpadding="10">
             <h:column>
                 <f:facet name="header">User ID.</f:facet>
                 <h:outputText value="#"/>
+                #{user.id}
             </h:column>
             <h:column>
                 <f:facet name="header">Username</f:facet>
-                
+                #{user.username}
             </h:column>
             <h:column>
                 <f:facet name="header">First Name</f:facet>
-                
+                #{user.name}
             </h:column>
             <h:column>
                 <f:facet name="header">Last Name</f:facet>
-                
+                #{user.surname}
             </h:column>
             <h:column>
                 <f:facet name="header">Balance</f:facet>
-                <h:outputText value="£"/>
+                <h:outputText value="#{user.currency.symbol}"/>
+                #{user.balance}
             </h:column>
         </h:dataTable>
         
