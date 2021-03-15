@@ -30,7 +30,8 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Amount</f:facet>
-                    <h:outputText value="£"/>#{transaction.amount}
+                <h:outputText value="#{transaction.currency.symbol}"/>
+                #{transaction.amount}
             </h:column>
         </h:dataTable>
         
