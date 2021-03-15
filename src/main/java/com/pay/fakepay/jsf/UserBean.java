@@ -24,14 +24,7 @@ import javax.servlet.http.HttpServletRequest;
     public SystemUser getUser() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        
-        String user = request.getRemoteUser();
-        return usrSrv.getUser(user);
-    }
-    
-    public List<MoneyTransaction> getTransactions() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+                getExternalContext().getRequest();
         
         String user = request.getRemoteUser();
         return usrSrv.getTransactions(user);
