@@ -103,12 +103,16 @@ import javax.persistence.Query;
         SystemUser recipient = transaction.getRecipient();
         SystemUser sender = transaction.getSender();
         
-        sender.setBalance(sender.getBalance() - transaction.getSenderAmount());
-        recipient.setBalance(recipient.getBalance() + transaction.getRecipientAmount());
-        transaction.setPending(false);
-        
-        em.persist(sender);
-        em.persist(recipient);
-        em.persist(transaction);
+        if(sender.getBalance() >= transaction.getSenderAmount()) {
+            sender.setBalance(
+                    sender.getBalance() - transaction.getSenderAmount());
+            recipient.setBalance(
+                    recipient.getBalance() + transaction.getRecipientAmount());
+            transaction.setPending(false);
+
+            em.persist(sender);
+            em.persist(recipient);
+            em.persist(transaction);
+        }
     }
 }
