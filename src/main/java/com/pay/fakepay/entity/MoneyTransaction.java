@@ -31,9 +31,27 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(
             name="MoneyTransaction.byUsername",
             query="SELECT t FROM MoneyTransaction t "
-                    + "WHERE t.recipient.username = :username "
-                    + "OR t.sender.username = :username "
+                    + "WHERE (t.recipient.username = :username "
+                    + "OR t.sender.username = :username) "
                     + "AND t.pending = false"),
+    @NamedQuery(
+            name="MoneyTransaction.outgoingByUsername",
+            query="SELECT t FROM MoneyTransaction t "
+                    + "WHERE t.sender.username = :username "
+                    + "AND t.pending = true"
+    ),
+    @NamedQuery(
+            name="MoneyTransaction.incomingByUsername",
+            query="SELECT t FROM MoneyTransaction t "
+                    + "WHERE t.recipient.username = :username "
+                    + "AND t.pending = true"
+    ),
+    @NamedQuery(
+            name="MoneyTransaction.pendingById",
+            query="SELECT t FROM MoneyTransaction t "
+                    + "WHERE t.id = :id "
+                    + "AND t.pending = true"
+    ),
     @NamedQuery(
         name="MoneyTransaction.findAll",
         query="SELECT t FROM MoneyTransaction t "
