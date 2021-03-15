@@ -1,9 +1,11 @@
 package com.pay.fakepay.jsf;
 
 import com.pay.fakepay.ejb.TransactionService;
+import com.pay.fakepay.ejb.UserService;
 import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
     @EJB
     TransactionService transactionService;
     
+    @EJB
+    UserService userService;
+    
     String username;
     
     float amount;
@@ -23,7 +28,15 @@ import javax.servlet.http.HttpServletRequest;
     
     public String pay() {
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        
+        if(!userService.userExists(username)) {
+            context.addMessage("payment:username", 
+                    new FacesMessage("User does not exist."));
+            return null;
+        }
+        
+        HttpServletRequest request = (HttpServletRequest) context
+                .getExternalContext().getRequest();
         
         String user = request.getRemoteUser();
         
@@ -33,7 +46,15 @@ import javax.servlet.http.HttpServletRequest;
     
     public String request() {
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        
+        if(!userService.userExists(username)) {
+            context.addMessage("request:username", 
+                    new FacesMessage("User does not exist."));
+            return null;
+        }
+        
+        HttpServletRequest request = (HttpServletRequest) context
+                .getExternalContext().getRequest();
         
         String user = request.getRemoteUser();
         
