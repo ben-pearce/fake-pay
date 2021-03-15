@@ -56,8 +56,9 @@
             <to-view-id>/admins/transactions.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>register</from-outcome>
-            <to-view-id>/admins/register.xhtml</to-view-id>
+            <from-outcome>registration</from-outcome>
+            <to-view-id>/admins/registration.xhtml</to-view-id>
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>user</from-outcome>
