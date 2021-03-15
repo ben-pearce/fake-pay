@@ -59,12 +59,6 @@ import javax.persistence.Query;
         }
     }
     
-    public List<MoneyTransaction> getTransactions(String username) {
-        Query query = em.createNamedQuery("MoneyTransaction.byUsername");
-        query.setParameter("username", username);
-        return query.getResultList();
-    }
-    
     public SystemUser getUser(String username) {
         Query query = em.createNamedQuery("SystemUser.getUser");
         query.setParameter("username", username);
