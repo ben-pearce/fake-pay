@@ -1,11 +1,8 @@
 package com.pay.fakepay.entity;
 
-import com.pay.fakepay.Currency;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -74,11 +71,10 @@ public class MoneyTransaction implements Serializable {
     private SystemUser recipient;
     
     @NotNull
-    private float amount;
+    private float senderAmount;
     
     @NotNull
-    @Enumerated(EnumType.ORDINAL)
-    private Currency currency;
+    private float recipientAmount;
     
     @NotNull
     private boolean pending;
@@ -86,25 +82,25 @@ public class MoneyTransaction implements Serializable {
     public MoneyTransaction(
             SystemUser sender, 
             SystemUser recipient, 
-            float amount,
-            Currency currency,
+            float senderAmount,
+            float recipientAmount,
             boolean pending) {
         this.sender = sender;
         this.recipient = recipient;
-        this.amount = amount;
-        this.currency = currency;
+        this.senderAmount = senderAmount;
+        this.recipientAmount = recipientAmount;
         this.pending = pending;
     }
     
     public MoneyTransaction(
             SystemUser sender, 
             SystemUser recipient, 
-            float amount,
-            Currency currency) {
+            float senderAmount,
+            float recipientAmount) {
         this.sender = sender;
         this.recipient = recipient;
-        this.amount = amount;
-        this.currency = currency;
+        this.senderAmount = senderAmount;
+        this.recipientAmount = recipientAmount;
         this.pending = true;
     }    
     public MoneyTransaction() { }
@@ -133,20 +129,20 @@ public class MoneyTransaction implements Serializable {
         this.recipient = recipient;
     }
 
-    public float getAmount() {
-        return amount;
+    public float getSenderAmount() {
+        return senderAmount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setSenderAmount(float senderAmount) {
+        this.senderAmount = senderAmount;
     }
 
-    public Currency getCurrency() {
-        return currency;
+    public float getRecipientAmount() {
+        return recipientAmount;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public void setRecipientAmount(float recipientAmount) {
+        this.recipientAmount = recipientAmount;
     }
 
     public boolean isPending() {
