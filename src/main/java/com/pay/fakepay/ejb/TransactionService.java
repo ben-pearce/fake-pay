@@ -2,6 +2,7 @@ package com.pay.fakepay.ejb;
 
 import com.pay.fakepay.entity.MoneyTransaction;
 import com.pay.fakepay.entity.SystemUser;
+import com.pay.fakepay.CurrencyExchange;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -19,42 +20,48 @@ import javax.persistence.Query;
     
     public TransactionService() { }
     
-    public void makePayment(String from, String to, float amount) {
+    public void makePayment(String from, String to, float senderAmount) {
         Query query = em.createNamedQuery("SystemUser.getUser");
         query.setParameter("username", from);
-        
         SystemUser sender = (SystemUser) query.getSingleResult();
         
         query = em.createNamedQuery("SystemUser.getUser");
         query.setParameter("username", to);
-        
         SystemUser recipient = (SystemUser) query.getSingleResult();
+        
+        Float recipientAmount = CurrencyExchange.convert(
+                sender.getCurrency(), 
+                recipient.getCurrency(), 
+                senderAmount);
         
         MoneyTransaction transaction = new MoneyTransaction(
                 sender, 
                 recipient, 
-                amount, 
-                recipient.getCurrency());
-        
+                senderAmount, 
+                recipientAmount);
         completeTransaction(transaction);
     }
     
-    public void requestPayment(String from, String to, float amount) {
+    public void requestPayment(String from, String to, float recipientAmount) {
         Query query = em.createNamedQuery("SystemUser.getUser");
         query.setParameter("username", from);
-        
         SystemUser sender = (SystemUser) query.getSingleResult();
         
         query = em.createNamedQuery("SystemUser.getUser");
         query.setParameter("username", to);
-        
         SystemUser recipient = (SystemUser) query.getSingleResult();
+        
+        Float senderAmount = CurrencyExchange.convert(
+                recipient.getCurrency(), 
+                sender.getCurrency(),
+                recipientAmount);
         
         MoneyTransaction transaction = new MoneyTransaction(
                 sender, 
                 recipient, 
-                amount, 
-                recipient.getCurrency());
+                senderAmount,
+                recipientAmount);
+        
         em.persist(transaction);
     }
     
@@ -96,10 +103,8 @@ import javax.persistence.Query;
         SystemUser recipient = transaction.getRecipient();
         SystemUser sender = transaction.getSender();
         
-        sender.setBalance(sender.getBalance() - transaction.getAmount());
-        
-        // TODO: Convert currency!
-        recipient.setBalance(recipient.getBalance() + transaction.getAmount());
+        sender.setBalance(sender.getBalance() - transaction.getSenderAmount());
+        recipient.setBalance(recipient.getBalance() + transaction.getRecipientAmount());
         transaction.setPending(false);
         
         em.persist(sender);
