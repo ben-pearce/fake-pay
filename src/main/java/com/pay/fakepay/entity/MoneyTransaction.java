@@ -81,7 +81,7 @@ public class MoneyTransaction implements Serializable {
     public MoneyTransaction(
             SystemUser sender, 
             SystemUser recipient, 
-            int amount,
+            float amount,
             Currency currency) {
         this.sender = sender;
         this.recipient = recipient;
