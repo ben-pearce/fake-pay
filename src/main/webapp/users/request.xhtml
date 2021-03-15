@@ -18,6 +18,7 @@
                         id="username" 
                         size="20"
                         required="true" 
+                        value="#{paymentBean.username}"
                         requiredMessage="Mandatory Field"/>
                     <br/>
                     <h:message style="color:red" for="username"/>
@@ -31,6 +32,7 @@
                         id="amount"
                         size="20" 
                         required="true" 
+                        value="#{paymentBean.amount}"
                         requiredMessage="Mandatory Field"/>
                     <br/>
                     <h:message style="color:red" for="amount"/>
@@ -41,6 +43,7 @@
                         <h:commandButton 
                             style="display:block;float:right"
                             id="submit" 
+                            action="#{paymentBean.request}"
                             type="submit" 
                             value="Request Payment"/>
                         <h:commandButton 
