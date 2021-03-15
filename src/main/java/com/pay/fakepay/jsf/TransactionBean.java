@@ -4,6 +4,7 @@ import com.pay.fakepay.ejb.TransactionService;
 import com.pay.fakepay.entity.MoneyTransaction;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Named
+@DeclareRoles({"user", "admin"})
 @SessionScoped public class TransactionBean implements Serializable {
     @EJB
     TransactionService transactionService;
