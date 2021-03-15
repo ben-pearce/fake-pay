@@ -28,6 +28,16 @@ import javax.servlet.http.HttpServletRequest;
         transactionService.makePayment(user, username, amount);
         return "user";
     }
+    
+    public String request() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        
+        String user = request.getRemoteUser();
+        
+        transactionService.requestPayment(username, user, amount);
+        return "user";
+    }
 
     public String getUsername() {
         return username;
