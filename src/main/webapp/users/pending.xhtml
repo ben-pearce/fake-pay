@@ -66,6 +66,7 @@
                         id="transactionId"/>
                     <h:commandButton 
                         value="Accept" 
+                        disabled="#{transaction.senderAmount > userBean.user.balance}"
                         action="#{pendingTransactionBean.acceptPendingTransaction}"
                         style="margin-right: 5px;color:green">
                         <f:setPropertyActionListener
