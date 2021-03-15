@@ -1,6 +1,7 @@
 package com.pay.fakepay.jsf;
 
 import com.pay.fakepay.ejb.TransactionService;
+import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -8,6 +9,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 @Named
+@DeclareRoles({"user", "admin"})
 @RequestScoped public class PaymentBean {
     
     @EJB
