@@ -13,7 +13,7 @@
         
         <h3>Incoming</h3>
         <h:dataTable 
-            value="#{userBean.transactions}" 
+            value="#{transactionBean.incomingTransactions}" 
             var="transaction"
             border="1" 
             cellpadding="10">
@@ -22,31 +22,20 @@
                 <h:outputText value="#"/>#{transaction.id}
             </h:column>
             <h:column>
-                <f:facet name="header">Sender ID</f:facet>
-                    #{transaction.sender.username}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Recipient ID</f:facet>
-                    #{transaction.recipient.username}
+                <f:facet name="header">Sender</f:facet>
+                #{transaction.sender.username}
             </h:column>
             <h:column>
                 <f:facet name="header">Amount</f:facet>
-                    <h:outputText value="£"/>#{transaction.amount}
-            </h:column>
-            <h:column>
-                <f:facet name="header"></f:facet>
-                <h:form>
-                    <h:inputHidden value="#{transaction.id}" id="transactionId"/>
-                    <h:commandButton value="Accept" style="margin-right: 5px;color:green"/>
-                    <h:commandButton value="Reject" style="color:red"/>
-                </h:form>
+                <h:outputText value="#{transaction.currency.symbol}"/>
+                #{transaction.amount}
             </h:column>
         </h:dataTable>
         
         <hr/>
         <h3>Outgoing</h3>
         <h:dataTable 
-            value="#{userBean.transactions}" 
+            value="#{transactionBean.outgoingTransactions}" 
             var="transaction"
             border="1" 
             cellpadding="10">
@@ -55,16 +44,37 @@
                 <h:outputText value="#"/>#{transaction.id}
             </h:column>
             <h:column>
-                <f:facet name="header">Sender ID</f:facet>
-                    #{transaction.sender.username}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Recipient ID</f:facet>
-                    #{transaction.recipient.username}
+                <f:facet name="header">Recipient</f:facet>
+                #{transaction.recipient.username}
             </h:column>
             <h:column>
                 <f:facet name="header">Amount</f:facet>
-                    <h:outputText value="£"/>#{transaction.amount}
+                <h:outputText value="#{transaction.currency.symbol}"/>
+                #{transaction.amount}
+            </h:column>
+            <h:column>
+                <f:facet name="header"></f:facet>
+                <h:form>
+                    <h:inputHidden 
+                        value="#{transaction.id}" 
+                        id="transactionId"/>
+                    <h:commandButton 
+                        value="Accept" 
+                        action="#{pendingTransactionBean.acceptPendingTransaction}"
+                        style="margin-right: 5px;color:green">
+                        <f:setPropertyActionListener
+                            target="#{pendingTransactionBean.transactionId}" 
+                            value="#{transaction.id}"/>
+                    </h:commandButton>
+                    <h:commandButton 
+                        value="Reject" 
+                        action="#{pendingTransactionBean.declinePendingTransaction}"
+                        style="color:red">
+                        <f:setPropertyActionListener
+                            target="#{pendingTransactionBean.transactionId}" 
+                            value="#{transaction.id}"/>
+                    </h:commandButton>
+                </h:form>
             </h:column>
         </h:dataTable>
         
