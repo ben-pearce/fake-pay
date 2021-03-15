@@ -11,14 +11,17 @@
         <hr/>
         <h:form>
             <h:panelGrid columns="2" border="0" cellpadding="10">
-                <h:outputLabel for="username" value="User name:"/>
+                <h:outputLabel for="username" value="Username:"/>
                 <h:panelGroup>
                     <h:inputText 
                         id="username" 
                         value="#{administratorCreateBean.username}"
-                        title="Enter user name"
+                        title="Enter username"
                         required="true" 
-                        requiredMessage="Mandatory Field"/>
+                        requiredMessage="Mandatory Field">
+                        <f:validateLength minimum="2" maximum="20"/>
+                        <f:validateRegex pattern="[a-zA-Z0-9-_]+"/>
+                    </h:inputText>
                     <br/>
                     <h:message style="color:red" for="username"/>
                 </h:panelGroup>
@@ -30,7 +33,9 @@
                                    title="Enter password" 
                                    label="password" 
                                    required="true"
-                                   requiredMessage="Mandatory Field"/>
+                                   requiredMessage="Mandatory Field">
+                        <f:validateLength minimum="8"/>
+                    </h:inputSecret>
                     <br/>
                     <h:message style="color:red" for="userPassword"/>
                 </h:panelGroup>
