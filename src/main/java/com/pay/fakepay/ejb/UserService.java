@@ -70,6 +70,14 @@ import javax.persistence.Query;
         }
     }
     
+    public Boolean userExists(String username) {
+        Query query = em.createNamedQuery("SystemUser.countByName");
+        query.setParameter("username", username);
+        Long count = (Long) query.getSingleResult();
+
+        return count.compareTo(0L) > 0;
+    }
+    
     public SystemUser getUser(String username) {
         Query query = em.createNamedQuery("SystemUser.getUser");
         query.setParameter("username", username);
