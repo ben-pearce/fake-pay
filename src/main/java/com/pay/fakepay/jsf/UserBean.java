@@ -1,10 +1,8 @@
 package com.pay.fakepay.jsf;
 
 import com.pay.fakepay.ejb.UserService;
-import com.pay.fakepay.entity.MoneyTransaction;
 import com.pay.fakepay.entity.SystemUser;
 import java.io.Serializable;
-import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -17,16 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 @SessionScoped public class UserBean implements Serializable {
     
     @EJB
-    UserService usrSrv;
+    UserService userService;
     
     public UserBean() { }
     
     public SystemUser getUser() {
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        HttpServletRequest request = (HttpServletRequest) context.
                 getExternalContext().getRequest();
         
         String user = request.getRemoteUser();
-        return usrSrv.getTransactions(user);
+        return userService.getUser(user);
     }
 }
