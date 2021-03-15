@@ -15,7 +15,7 @@
                 <h:panelGroup>
                     <h:inputText 
                         id="username" 
-                        value=""
+                        value="#{administratorCreateBean.username}"
                         title="Enter user name"
                         required="true" 
                         requiredMessage="Mandatory Field"/>
@@ -26,7 +26,7 @@
                 <h:outputLabel for="userPassword" value="Password:"/>
                 <h:panelGroup>
                     <h:inputSecret id="userPassword" 
-                                   value="" 
+                                   value="#{administratorCreateBean.password}" 
                                    title="Enter password" 
                                    label="password" 
                                    required="true"
@@ -42,7 +42,7 @@
                             id="register" 
                             type="submit" 
                             value="Register" 
-                            action="" 
+                            action="#{administratorCreateBean.register}" 
                             title="Register Admin"/>
                         <h:commandButton 
                             style="display:block;float:left"
