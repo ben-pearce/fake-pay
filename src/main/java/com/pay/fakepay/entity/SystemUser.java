@@ -75,20 +75,6 @@ public class SystemUser implements Serializable {
         this.balance = balance;
     }
     
-    public SystemUser(
-            String username, 
-            String userpassword,
-            String name, 
-            String surname,
-            Currency currency) {
-        this.username = username;
-        this.userpassword = userpassword;
-        this.name = name;
-        this.surname = surname;
-        this.currency = currency;
-        this.balance = 1000;
-    }
-    
     public SystemUser() { }
 
     public Long getId() {
