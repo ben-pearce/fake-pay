@@ -19,7 +19,10 @@
                         size="20"
                         required="true" 
                         value="#{paymentBean.username}"
-                        requiredMessage="Mandatory Field"/>
+                        requiredMessage="Mandatory Field">
+                        <f:validateLength minimum="2" maximum="20"/>
+                        <f:validateRegex pattern="[a-zA-Z0-9-_]+"/>
+                    </h:inputText>
                     <br/>
                     <h:message style="color:red" for="username"/>
                 </h:panelGroup>
@@ -33,7 +36,9 @@
                         size="20" 
                         required="true" 
                         value="#{paymentBean.amount}"
-                        requiredMessage="Mandatory Field"/>
+                        requiredMessage="Mandatory Field">
+                        <f:validateDoubleRange minimum="0.01"/>
+                    </h:inputText>
                     <br/>
                     <h:message style="color:red" for="amount"/>
                 </h:panelGroup>
