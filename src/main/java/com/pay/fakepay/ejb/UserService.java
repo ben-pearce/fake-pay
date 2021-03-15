@@ -27,7 +27,7 @@ import javax.persistence.Query;
             String userpassword, 
             String name, 
             String surname,
-            String currency) {
+            Currency currency) {
         try {
             SystemUser sysUser;
             SystemUserGroup sysUserGroup;
@@ -42,13 +42,12 @@ import javax.persistence.Query;
                         .substring(1));
             }
             String passwordHash = sb.toString();
-            Currency userCurrency = Currency.valueOf(currency);
             
             Float balance = 1000f;
-            if(userCurrency != Currency.GBP) {
+            if(currency != Currency.GBP) {
                 balance = CurrencyExchange.convert(
                     Currency.GBP, 
-                    userCurrency, 
+                    currency, 
                     balance);
             }
 
@@ -57,7 +56,7 @@ import javax.persistence.Query;
                     passwordHash, 
                     name, 
                     surname,
-                    userCurrency,
+                    currency,
                     balance
             );
             sysUserGroup = new SystemUserGroup(username, "users");

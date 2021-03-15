@@ -1,5 +1,6 @@
 package com.pay.fakepay.jsf;
 
+import com.pay.fakepay.Currency;
 import com.pay.fakepay.ejb.UserService;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -15,7 +16,7 @@ import javax.inject.Named;
     String userpassword;
     String name;
     String surname;
-    String currency;
+    Currency currency;
 
     public RegistrationBean() { }
 
@@ -26,6 +27,7 @@ import javax.inject.Named;
                 name, 
                 surname, 
                 currency);
+        
         return "index";
     }
     
@@ -69,11 +71,11 @@ import javax.inject.Named;
         this.surname = surname;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 }

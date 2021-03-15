@@ -1,5 +1,6 @@
 package com.pay.fakepay.ejb;
 
+import com.pay.fakepay.Currency;
 import com.pay.fakepay.entity.SystemUserGroup;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -37,7 +38,7 @@ import javax.persistence.Query;
         userService.register(
                 username, 
                 password, 
-                "", "", "GBP");
+                "", "", Currency.GBP);
 
         SystemUserGroup sysUserGroup = new SystemUserGroup(
                 username, "admins");
