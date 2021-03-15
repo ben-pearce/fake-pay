@@ -12,25 +12,26 @@
         <hr/>
         
         <h:dataTable 
-            value="" 
+            value="#{adminBean.transactions}" 
             var="transaction"
             border="1" 
             cellpadding="10">
             <h:column>
                 <f:facet name="header">Trans No.</f:facet>
-                <h:outputText value="#"/>
+                <h:outputText value="#"/>#{transaction.id}
             </h:column>
             <h:column>
                 <f:facet name="header">Sender ID</f:facet>
-                
+                #{transaction.sender.username}
             </h:column>
             <h:column>
                 <f:facet name="header">Recipient ID</f:facet>
-                
+                #{transaction.recipient.username}
             </h:column>
             <h:column>
                 <f:facet name="header">Amount</f:facet>
-                <h:outputText value="£"/>
+                <h:outputText value="#{transaction.recipient.currency.symbol}"/>
+                #{transaction.recipientAmount}
             </h:column>
         </h:dataTable>
         
