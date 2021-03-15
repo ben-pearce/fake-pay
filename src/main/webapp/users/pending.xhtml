@@ -27,8 +27,11 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Amount</f:facet>
+                
                 <h:outputText value="#{transaction.recipient.currency.symbol}"/>
-                #{transaction.recipientAmount}
+                <h:outputText value="#{transaction.recipientAmount}">
+                    <f:convertNumber pattern="#0.00"/>
+                </h:outputText>
             </h:column>
         </h:dataTable>
         
@@ -49,8 +52,11 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Amount</f:facet>
+                
                 <h:outputText value="#{transaction.sender.currency.symbol}"/>
-                #{transaction.senderAmount}
+                <h:outputText value="#{transaction.senderAmount}">
+                    <f:convertNumber pattern="#0.00"/>
+                </h:outputText>
             </h:column>
             <h:column>
                 <f:facet name="header"></f:facet>
