@@ -25,7 +25,11 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(
             name="SystemUser.getUser",
             query="SELECT u FROM SystemUser u "
-                    + "WHERE u.username = :username")
+                    + "WHERE u.username = :username"),
+    @NamedQuery(
+            name="SystemUser.findAll",
+            query="SELECT u FROM SystemUser u"
+    )
 })
 public class SystemUser implements Serializable {
     
