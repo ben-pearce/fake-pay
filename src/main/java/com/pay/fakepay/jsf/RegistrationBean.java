@@ -4,6 +4,8 @@ import com.pay.fakepay.Currency;
 import com.pay.fakepay.ejb.UserService;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
@@ -21,6 +23,13 @@ import javax.inject.Named;
     public RegistrationBean() { }
 
     public String register() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(userService.userExists(username)) {
+            context.addMessage("register:username", 
+                    new FacesMessage("Username is already in use."));
+            return null;
+        }
+        
         userService.register(
                 username, 
                 userpassword,
