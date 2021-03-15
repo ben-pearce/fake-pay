@@ -2,6 +2,7 @@ package com.pay.fakepay.jsf;
 
 import java.io.IOException;
 import java.io.Serializable;
+import javax.annotation.security.DeclareRoles;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Named
+@DeclareRoles({"user", "admin"})
 @RequestScoped public class LoginBean implements Serializable {
 
     public void logout() {
