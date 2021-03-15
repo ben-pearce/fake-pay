@@ -2,11 +2,13 @@ package com.pay.fakepay.jsf;
 
 import com.pay.fakepay.ejb.TransactionService;
 import java.io.Serializable;
+import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @Named
+@DeclareRoles({"user", "admin"})
 @SessionScoped public class PendingTransactionBean implements Serializable {
     
     @EJB
