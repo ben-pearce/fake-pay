@@ -67,7 +67,7 @@
         <web-resource-collection>
             <web-resource-name>everyone</web-resource-name>
             <description/>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/faces/*</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
             <description/>
