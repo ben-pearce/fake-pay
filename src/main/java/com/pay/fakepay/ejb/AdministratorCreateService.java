@@ -29,16 +29,18 @@ import javax.persistence.Query;
         Long count = (Long) query.getSingleResult();
 
         if(count.equals(0L)) {
-            userService.register(
-                    adminUser, 
-                    adminPassword, 
-                    adminUser, 
-                    adminUser,
-                    "GBP");
-            
-            SystemUserGroup sysUserGroup = new SystemUserGroup(
-                    adminUser, "admins");
-            em.persist(sysUserGroup);
+            create(adminUser, adminPassword);
         }
+    }
+    
+    public void create(String username, String password) {
+        userService.register(
+                username, 
+                password, 
+                "", "", "GBP");
+
+        SystemUserGroup sysUserGroup = new SystemUserGroup(
+                username, "admins");
+        em.persist(sysUserGroup);
     }
 }
