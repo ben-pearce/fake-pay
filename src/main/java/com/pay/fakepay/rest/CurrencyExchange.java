@@ -12,8 +12,8 @@ class Conversion {
     String currencyTwo;
 
     public Conversion(String currencyOne, String currencyTwo) {
-        this.currencyOne = currencyOne;
-        this.currencyTwo = currencyTwo;
+        this.currencyOne = currencyOne.toLowerCase();
+        this.currencyTwo = currencyTwo.toLowerCase();
     }
 
     @Override
