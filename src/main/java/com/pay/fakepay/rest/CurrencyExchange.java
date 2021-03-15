@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 class Conversion {
     String currencyOne;
@@ -49,18 +50,27 @@ public class CurrencyExchange {
     
     @GET
     @Produces("text/plain")
-    public String getCurrencyConversion(
+    public Response getCurrencyConversion(
             @PathParam("currencyOne") String currencyOne, 
             @PathParam("currencyTwo") String currencyTwo, 
             @PathParam("amount") float amount) {
+        // TODO: Look into producing a JSON reply?
         if(currencyOne.equals(currencyTwo)) {
-            return Float.toString(amount);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(amount)
+                    .build();
         }
         Conversion c = new Conversion(currencyOne, currencyTwo);
         if(!exchangeRates.containsKey(c)) {
-            return "0";
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
         }
         float rate = exchangeRates.get(c);
-        return Float.toString(amount * rate);
+        return Response
+                .status(Response.Status.OK)
+                .entity(amount * rate)
+                .build();
     }
 }
