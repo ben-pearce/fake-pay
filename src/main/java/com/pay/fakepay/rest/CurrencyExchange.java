@@ -1,5 +1,6 @@
 package com.pay.fakepay.rest;
 
+import com.pay.fakepay.Currency;
 import java.util.HashMap;
 import java.util.Objects;
 import javax.ws.rs.GET;
@@ -9,12 +10,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 class Conversion {
-    String currencyOne;
-    String currencyTwo;
+    Currency currencyOne;
+    Currency currencyTwo;
 
-    public Conversion(String currencyOne, String currencyTwo) {
-        this.currencyOne = currencyOne.toLowerCase();
-        this.currencyTwo = currencyTwo.toLowerCase();
+    public Conversion(Currency currencyOne, Currency currencyTwo) {
+        this.currencyOne = currencyOne;
+        this.currencyTwo = currencyTwo;
     }
 
     @Override
@@ -40,19 +41,19 @@ public class CurrencyExchange {
     
     private final static HashMap<Conversion, Float> exchangeRates = 
             new HashMap<Conversion, Float>() {{
-        put(new Conversion("gbp", "eur"), 1.17f);
-        put(new Conversion("gbp", "usd"), 1.39f);
-        put(new Conversion("eur", "gbp"), 0.86f);
-        put(new Conversion("eur", "usd"), 1.19f);
-        put(new Conversion("usd", "gbp"), 0.72f);
-        put(new Conversion("usd", "eur"), 0.84f);
+        put(new Conversion(Currency.GBP, Currency.EUR), 1.17f);
+        put(new Conversion(Currency.GBP, Currency.USD), 1.39f);
+        put(new Conversion(Currency.EUR, Currency.GBP), 0.86f);
+        put(new Conversion(Currency.EUR, Currency.USD), 1.19f);
+        put(new Conversion(Currency.USD, Currency.GBP), 0.72f);
+        put(new Conversion(Currency.USD, Currency.EUR), 0.84f);
     }};
     
     @GET
     @Produces("text/plain")
     public Response getCurrencyConversion(
-            @PathParam("currencyOne") String currencyOne, 
-            @PathParam("currencyTwo") String currencyTwo, 
+            @PathParam("currencyOne") final Currency currencyOne, 
+            @PathParam("currencyTwo") final Currency currencyTwo, 
             @PathParam("amount") float amount) {
         // TODO: Look into producing a JSON reply?
         if(currencyOne.equals(currencyTwo)) {
