@@ -1,6 +1,8 @@
 package com.pay.fakepay.rest;
 
 import com.pay.fakepay.Currency;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Objects;
 import javax.ws.rs.GET;
@@ -8,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import org.json.JSONObject;
 
 class Conversion {
     Currency currencyOne;
@@ -50,28 +53,27 @@ public class CurrencyExchange {
     }};
     
     @GET
-    @Produces("text/plain")
+    @Produces("application/json")
     public Response getCurrencyConversion(
             @PathParam("currencyOne") final Currency currencyOne, 
             @PathParam("currencyTwo") final Currency currencyTwo, 
-            @PathParam("amount") float amount) {
-        // TODO: Look into producing a JSON reply?
-        if(currencyOne.equals(currencyTwo)) {
-            return Response
-                    .status(Response.Status.OK)
-                    .entity(amount)
-                    .build();
-        }
+            @PathParam("amount") final float amount) {
+        JSONObject resp = new JSONObject() {{
+            put("from", currencyOne);
+            put("to", currencyTwo);
+            put("amount", amount);
+        }};
+        
         Conversion c = new Conversion(currencyOne, currencyTwo);
-        if(!exchangeRates.containsKey(c)) {
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .build();
-        }
-        float rate = exchangeRates.get(c);
+        float rate = exchangeRates.containsKey(c) ? exchangeRates.get(c) : 1f;
+        
+        BigDecimal bd = new BigDecimal(Float.toString(amount * rate));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        resp.put("exchanged", bd.floatValue());
+        
         return Response
                 .status(Response.Status.OK)
-                .entity(amount * rate)
+                .entity(resp.toString())
                 .build();
     }
 }

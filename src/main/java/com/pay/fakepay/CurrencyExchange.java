@@ -1,9 +1,9 @@
 package com.pay.fakepay;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import org.json.JSONObject;
+
 
 public class CurrencyExchange {
     private static final String REST_BASE_URL = 
@@ -15,14 +15,13 @@ public class CurrencyExchange {
             Currency currencyOne, 
             Currency currencyTwo,
             float amount) {
-        Float converted = client.target(REST_BASE_URL)
+        String resp = client.target(REST_BASE_URL)
                 .path("conversion")
                 .path(currencyOne.toString())
                 .path(currencyTwo.toString())
                 .path(Float.toString(amount))
-                .request().get(Float.class);
-        BigDecimal bd = new BigDecimal(Float.toString(converted));
-        bd = bd.setScale(2, RoundingMode.HALF_UP);
-        return bd.floatValue();
+                .request().get(String.class);
+        JSONObject converted = new JSONObject(resp);
+        return converted.getFloat("exchanged");
     }
 }
