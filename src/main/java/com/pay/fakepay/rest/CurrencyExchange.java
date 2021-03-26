@@ -9,8 +9,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.json.JSONObject;
 
 class Conversion {
     Currency currencyOne;
@@ -54,26 +54,22 @@ public class CurrencyExchange {
     
     @GET
     @Path("/{currencyOne}/{currencyTwo}/{amount}")
+    @Produces({ MediaType.APPLICATION_JSON })
     public Response getCurrencyConversion(
             @PathParam("currencyOne") final Currency currencyOne, 
             @PathParam("currencyTwo") final Currency currencyTwo, 
             @PathParam("amount") final float amount) {
-        JSONObject resp = new JSONObject() {{
-            put("from", currencyOne);
-            put("to", currencyTwo);
-            put("amount", amount);
-        }};
+
+        CurrencyConversionResponse resp = new CurrencyConversionResponse(
+                currencyOne, currencyTwo, amount);
         
         Conversion c = new Conversion(currencyOne, currencyTwo);
         float rate = exchangeRates.containsKey(c) ? exchangeRates.get(c) : 1f;
         
         BigDecimal bd = new BigDecimal(Float.toString(amount * rate));
         bd = bd.setScale(2, RoundingMode.HALF_UP);
-        resp.put("exchanged", bd.floatValue());
+        resp.setExchanged(bd.floatValue());
         
-        return Response
-                .status(Response.Status.OK)
-                .entity(resp.toString())
-                .build();
+        return Response.ok(resp).build();
     }
 }
