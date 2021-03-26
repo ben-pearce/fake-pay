@@ -39,7 +39,7 @@ class Conversion {
     }
 }
 
-@Path("/conversion/{currencyOne}/{currencyTwo}/{amount}")
+@Path("/")
 public class CurrencyExchange {
     
     private final static HashMap<Conversion, Float> exchangeRates = 
@@ -53,7 +53,7 @@ public class CurrencyExchange {
     }};
     
     @GET
-    @Produces("application/json")
+    @Path("/{currencyOne}/{currencyTwo}/{amount}")
     public Response getCurrencyConversion(
             @PathParam("currencyOne") final Currency currencyOne, 
             @PathParam("currencyTwo") final Currency currencyTwo, 
