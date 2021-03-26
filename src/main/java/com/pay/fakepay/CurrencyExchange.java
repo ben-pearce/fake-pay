@@ -1,8 +1,9 @@
 package com.pay.fakepay;
 
+import com.pay.fakepay.rest.CurrencyConversionResponse;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import org.json.JSONObject;
+import javax.ws.rs.core.MediaType;
 
 
 public class CurrencyExchange {
@@ -15,13 +16,13 @@ public class CurrencyExchange {
             Currency currencyOne, 
             Currency currencyTwo,
             float amount) {
-        String resp = client.target(REST_BASE_URL)
+        CurrencyConversionResponse resp = client.target(REST_BASE_URL)
                 .path("conversion")
                 .path(currencyOne.toString())
                 .path(currencyTwo.toString())
                 .path(Float.toString(amount))
-                .request().get(String.class);
-        JSONObject converted = new JSONObject(resp);
-        return converted.getFloat("exchanged");
+                .request(MediaType.APPLICATION_JSON)
+                .get(CurrencyConversionResponse.class);
+        return resp.getExchanged();
     }
 }
