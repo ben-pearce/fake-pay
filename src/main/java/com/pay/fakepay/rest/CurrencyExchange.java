@@ -59,9 +59,13 @@ public class CurrencyExchange {
             @PathParam("currencyOne") final Currency currencyOne, 
             @PathParam("currencyTwo") final Currency currencyTwo, 
             @PathParam("amount") final float amount) {
-
         CurrencyConversionResponse resp = new CurrencyConversionResponse(
                 currencyOne, currencyTwo, amount);
+        
+        if(currencyOne == currencyTwo) {
+            resp.setExchanged(resp.getAmount());
+            return Response.ok(resp).build();
+        }
         
         Conversion c = new Conversion(currencyOne, currencyTwo);
         
