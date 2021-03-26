@@ -64,8 +64,11 @@ public class CurrencyExchange {
                 currencyOne, currencyTwo, amount);
         
         Conversion c = new Conversion(currencyOne, currencyTwo);
-        float rate = exchangeRates.containsKey(c) ? exchangeRates.get(c) : 1f;
         
+        if(!exchangeRates.containsKey(c)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        float rate = exchangeRates.get(c);
         BigDecimal bd = new BigDecimal(Float.toString(amount * rate));
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         resp.setExchanged(bd.floatValue());
