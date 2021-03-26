@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class CurrencyExchange {
     private static final String REST_BASE_URL = 
-            "http://localhost:10000/webapps2020/resources";
+            "http://localhost:10000/webapps2020/";
     
     private static final Client client = ClientBuilder.newClient();
     
