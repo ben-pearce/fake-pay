@@ -3,6 +3,7 @@ package com.pay.fakepay.jsf;
 import com.pay.fakepay.ejb.TransactionService;
 import com.pay.fakepay.entity.dto.MoneyTransactionDTO;
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJB;
@@ -46,5 +47,9 @@ import javax.servlet.http.HttpServletRequest;
         
         String user = request.getRemoteUser();
         return transactionService.getIncomingTransactions(user);
+    }
+    
+    public DateTimeFormatter getDateFormat() {
+        return DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     }
 }
