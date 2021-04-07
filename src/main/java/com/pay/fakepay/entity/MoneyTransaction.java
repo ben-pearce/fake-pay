@@ -16,41 +16,25 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NamedQueries({
     @NamedQuery(
-        name="MoneyTransaction.byReceipientId", 
-        query="SELECT t FROM MoneyTransaction t "
-                + "WHERE t.recipient = :recipientId "
-                + "AND t.pending = false"),
-    @NamedQuery(
-            name="MoneyTransaction.bySenderId",
-            query="SELECT t FROM MoneyTransaction t "
-                    + "WHERE t.sender = :senderId "
-                    + "AND t.pending = false"),
-    @NamedQuery(
-            name="MoneyTransaction.byUsername",
+            name="MoneyTransaction.getByUsername",
             query="SELECT t FROM MoneyTransaction t "
                     + "WHERE (t.recipient.username = :username "
                     + "OR t.sender.username = :username) "
                     + "AND t.pending = false"),
     @NamedQuery(
-            name="MoneyTransaction.outgoingByUsername",
+            name="MoneyTransaction.getOutgoing",
             query="SELECT t FROM MoneyTransaction t "
                     + "WHERE t.sender.username = :username "
                     + "AND t.pending = true"
     ),
     @NamedQuery(
-            name="MoneyTransaction.incomingByUsername",
+            name="MoneyTransaction.getIncoming",
             query="SELECT t FROM MoneyTransaction t "
                     + "WHERE t.recipient.username = :username "
                     + "AND t.pending = true"
     ),
     @NamedQuery(
-            name="MoneyTransaction.pendingById",
-            query="SELECT t FROM MoneyTransaction t "
-                    + "WHERE t.id = :id "
-                    + "AND t.pending = true"
-    ),
-    @NamedQuery(
-        name="MoneyTransaction.findAll",
+        name="MoneyTransaction.getAll",
         query="SELECT t FROM MoneyTransaction t "
                 + "WHERE t.pending = false")
 })
