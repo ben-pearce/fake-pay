@@ -1,7 +1,7 @@
 package com.pay.fakepay.jsf;
 
 import com.pay.fakepay.ejb.TransactionService;
-import com.pay.fakepay.entity.MoneyTransaction;
+import com.pay.fakepay.entity.dto.MoneyTransactionDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
@@ -20,16 +20,17 @@ import javax.servlet.http.HttpServletRequest;
     
     public TransactionBean() { } 
     
-    public List<MoneyTransaction> getTransactions() {
+    public List<MoneyTransactionDTO> getTransactions() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.
                 getExternalContext().getRequest();
         
         String user = request.getRemoteUser();
+        System.out.println(transactionService.getTransactions(user));
         return transactionService.getTransactions(user);
     }
     
-    public List<MoneyTransaction> getOutgoingTransactions() {
+    public List<MoneyTransactionDTO> getOutgoingTransactions() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.
                 getExternalContext().getRequest();
@@ -38,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
         return transactionService.getOutgoingTransactions(user);
     }
     
-    public List<MoneyTransaction> getIncomingTransactions() {
+    public List<MoneyTransactionDTO> getIncomingTransactions() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.
                 getExternalContext().getRequest();

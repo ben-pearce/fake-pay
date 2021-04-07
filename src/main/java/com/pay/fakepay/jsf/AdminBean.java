@@ -1,8 +1,8 @@
 package com.pay.fakepay.jsf;
 
 import com.pay.fakepay.ejb.AdminService;
-import com.pay.fakepay.entity.MoneyTransaction;
-import com.pay.fakepay.entity.SystemUser;
+import com.pay.fakepay.entity.dto.MoneyTransactionDTO;
+import com.pay.fakepay.entity.dto.SystemUserDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
@@ -19,11 +19,11 @@ import javax.inject.Named;
     
     public AdminBean() { } 
     
-    public List<SystemUser> getUsers() {
+    public List<SystemUserDTO> getUsers() {
         return adminService.getUsers();
     }
     
-    public List<MoneyTransaction> getTransactions() {
+    public List<MoneyTransactionDTO> getTransactions() {
         return adminService.getTransactions();
     }
 }

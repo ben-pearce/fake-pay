@@ -1,7 +1,7 @@
 package com.pay.fakepay.jsf;
 
 import com.pay.fakepay.ejb.UserService;
-import com.pay.fakepay.entity.SystemUser;
+import com.pay.fakepay.entity.dto.SystemUserDetailsDTO;
 import java.io.Serializable;
 import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJB;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
     
     public UserBean() { }
     
-    public SystemUser getUser() {
+    public SystemUserDetailsDTO getUser() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.
                 getExternalContext().getRequest();
