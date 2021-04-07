@@ -23,11 +23,11 @@ import javax.validation.constraints.NotNull;
             query="SELECT COUNT(u) FROM SystemUser u "
                     + "WHERE u.username = :username"),
     @NamedQuery(
-            name="SystemUser.getUser",
+            name="SystemUser.getByUsername",
             query="SELECT u FROM SystemUser u "
                     + "WHERE u.username = :username"),
     @NamedQuery(
-            name="SystemUser.findAll",
+            name="SystemUser.getAll",
             query="SELECT u FROM SystemUser u"
     )
 })
