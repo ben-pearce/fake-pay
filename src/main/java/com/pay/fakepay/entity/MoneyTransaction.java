@@ -2,7 +2,9 @@ package com.pay.fakepay.entity;
 
 import com.pay.fakepay.entity.dto.MoneyTransactionDTO;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -61,6 +63,9 @@ public class MoneyTransaction implements Serializable {
     @NotNull
     private float recipientAmount;
     
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdOn;
+    
     @NotNull
     private boolean pending;
 
@@ -69,11 +74,13 @@ public class MoneyTransaction implements Serializable {
             SystemUser recipient, 
             float senderAmount,
             float recipientAmount,
+            LocalDateTime createdOn,
             boolean pending) {
         this.sender = sender;
         this.recipient = recipient;
         this.senderAmount = senderAmount;
         this.recipientAmount = recipientAmount;
+        this.createdOn = createdOn;
         this.pending = pending;
     }
     
@@ -81,12 +88,9 @@ public class MoneyTransaction implements Serializable {
             SystemUser sender, 
             SystemUser recipient, 
             float senderAmount,
-            float recipientAmount) {
-        this.sender = sender;
-        this.recipient = recipient;
-        this.senderAmount = senderAmount;
-        this.recipientAmount = recipientAmount;
-        this.pending = true;
+            float recipientAmount,
+            LocalDateTime createdOn) {
+        this(sender, recipient, senderAmount, recipientAmount, createdOn, true);
     }    
     public MoneyTransaction() { }
 
@@ -138,6 +142,14 @@ public class MoneyTransaction implements Serializable {
         this.pending = pending;
     }
 
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+    
     public MoneyTransactionDTO getMoneyTransactionData() {
         return createMoneyTransaction();
     }
