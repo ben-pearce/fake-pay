@@ -1,6 +1,8 @@
 package com.pay.fakepay.entity;
 
 import com.pay.fakepay.Currency;
+import com.pay.fakepay.entity.dto.SystemUserDTO;
+import com.pay.fakepay.entity.dto.SystemUserDetailsDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -135,6 +137,35 @@ public class SystemUser implements Serializable {
 
     public int getVersion() {
         return version;
+    }
+    
+    public SystemUserDTO getSystemUserData() {
+        return createSystemUser();
+    }
+    
+    private SystemUserDTO createSystemUser() {
+        return new SystemUserDTO(
+                getId(),
+                getUsername(),
+                getUserpassword(), 
+                getName(),
+                getSurname(),
+                getCurrency(),
+                getBalance());
+    }
+    
+    public SystemUserDetailsDTO getSystemUserDetailsData() {
+        return createSystemUserDetails();
+    }
+    
+    private SystemUserDetailsDTO createSystemUserDetails() {
+        return new SystemUserDetailsDTO(
+                getUsername(),
+                getName(),
+                getSurname(),
+                getBalance(),
+                getCurrency()
+        );
     }
     
     @Override
