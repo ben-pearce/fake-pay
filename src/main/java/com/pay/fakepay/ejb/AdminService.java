@@ -1,27 +1,28 @@
 package com.pay.fakepay.ejb;
 
-import com.pay.fakepay.entity.MoneyTransaction;
-import com.pay.fakepay.entity.SystemUser;
+import com.pay.fakepay.entity.dao.MoneyTransactionDAO;
+import com.pay.fakepay.entity.dao.SystemUserDAO;
+import com.pay.fakepay.entity.dto.MoneyTransactionDTO;
+import com.pay.fakepay.entity.dto.SystemUserDTO;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 @Stateless public class AdminService {
     
-    @PersistenceContext
-    EntityManager em;
+    @EJB
+    SystemUserDAO su;
+    
+    @EJB
+    MoneyTransactionDAO mt;
     
     public AdminService() { }
     
-    public List<SystemUser> getUsers() {
-        Query query = em.createNamedQuery("SystemUser.findAll");
-        return query.getResultList();
+    public List<SystemUserDTO> getUsers() {
+        return su.all();
     }
     
-    public List<MoneyTransaction> getTransactions() {
-        Query query = em.createNamedQuery("MoneyTransaction.findAll");
-        return query.getResultList();
+    public List<MoneyTransactionDTO> getTransactions() {
+        return mt.all();
     }
 }

@@ -3,23 +3,32 @@ package com.pay.fakepay.ejb;
 import com.pay.fakepay.Currency;
 import com.pay.fakepay.CurrencyExchange;
 import com.pay.fakepay.entity.SystemUser;
-import com.pay.fakepay.entity.SystemUserGroup;
+import com.pay.fakepay.entity.dao.SystemUserDAO;
+import com.pay.fakepay.entity.dao.SystemUserGroupDAO;
+import com.pay.fakepay.entity.dto.SystemUserDTO;
+import com.pay.fakepay.entity.dto.SystemUserDetailsDTO;
+import com.pay.fakepay.entity.dto.SystemUserGroupDTO;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 
 @Stateless public class UserService {
-
+    
     @PersistenceContext
     EntityManager em;
-
+    
+    @EJB
+    SystemUserDAO su ;
+    
+    @EJB
+    SystemUserGroupDAO sug;
+    
     public UserService() { }
 
     public void register(
@@ -29,9 +38,6 @@ import javax.persistence.Query;
             String surname,
             Currency currency) {
         try {
-            SystemUser sysUser;
-            SystemUserGroup sysUserGroup;
-            
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(userpassword.getBytes("UTF-8"));
             byte[] digest = md.digest();
@@ -51,18 +57,17 @@ import javax.persistence.Query;
                     balance);
             }
 
-            sysUser = new SystemUser(
-                    username, 
+            SystemUserDTO user = new SystemUserDTO(
+                    username,
                     passwordHash, 
                     name, 
                     surname,
                     currency,
-                    balance
-            );
-            sysUserGroup = new SystemUserGroup(username, "users");
-
-            em.persist(sysUser);
-            em.persist(sysUserGroup);
+                    balance);
+            SystemUserGroupDTO userGroup = new SystemUserGroupDTO(
+                    username, "users");
+            su.save(user);
+            sug.save(userGroup);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(UserService.class.getName())
                     .log(Level.SEVERE, null, ex);
@@ -70,16 +75,10 @@ import javax.persistence.Query;
     }
     
     public Boolean userExists(String username) {
-        Query query = em.createNamedQuery("SystemUser.countByName");
-        query.setParameter("username", username);
-        Long count = (Long) query.getSingleResult();
-
-        return count.compareTo(0L) > 0;
+        return su.exists(username);
     }
     
-    public SystemUser getUser(String username) {
-        Query query = em.createNamedQuery("SystemUser.getUser");
-        query.setParameter("username", username);
-        return (SystemUser) query.getSingleResult();
+    public SystemUserDetailsDTO getUser(String username) {
+        return su.details(username);
     }
 }

@@ -1,40 +1,38 @@
 package com.pay.fakepay.ejb;
 
-import com.pay.fakepay.entity.MoneyTransaction;
-import com.pay.fakepay.entity.SystemUser;
 import com.pay.fakepay.CurrencyExchange;
+import com.pay.fakepay.entity.dao.MoneyTransactionDAO;
+import com.pay.fakepay.entity.dao.SystemUserDAO;
+import com.pay.fakepay.entity.dto.MoneyTransactionDTO;
+import com.pay.fakepay.entity.dto.SystemUserDetailsDTO;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import static javax.ejb.TransactionAttributeType.REQUIRED;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 
 @TransactionAttribute(REQUIRED)
 @Stateless public class TransactionService {
     
-    @PersistenceContext
-    EntityManager em;
+    @EJB
+    SystemUserDAO su;
+    
+    @EJB
+    MoneyTransactionDAO mt;
     
     public TransactionService() { }
     
     public void makePayment(String from, String to, float senderAmount) {
-        Query query = em.createNamedQuery("SystemUser.getUser");
-        query.setParameter("username", from);
-        SystemUser sender = (SystemUser) query.getSingleResult();
-        
-        query = em.createNamedQuery("SystemUser.getUser");
-        query.setParameter("username", to);
-        SystemUser recipient = (SystemUser) query.getSingleResult();
+        SystemUserDetailsDTO sender = su.details(from);
+        SystemUserDetailsDTO recipient = su.details(to);
         
         Float recipientAmount = CurrencyExchange.convert(
                 sender.getCurrency(), 
                 recipient.getCurrency(), 
                 senderAmount);
         
-        MoneyTransaction transaction = new MoneyTransaction(
+        MoneyTransactionDTO transaction = new MoneyTransactionDTO(
                 sender, 
                 recipient, 
                 senderAmount, 
@@ -43,65 +41,48 @@ import javax.persistence.Query;
     }
     
     public void requestPayment(String from, String to, float recipientAmount) {
-        Query query = em.createNamedQuery("SystemUser.getUser");
-        query.setParameter("username", from);
-        SystemUser sender = (SystemUser) query.getSingleResult();
-        
-        query = em.createNamedQuery("SystemUser.getUser");
-        query.setParameter("username", to);
-        SystemUser recipient = (SystemUser) query.getSingleResult();
+        SystemUserDetailsDTO sender = su.details(from);
+        SystemUserDetailsDTO recipient = su.details(to);
         
         Float senderAmount = CurrencyExchange.convert(
                 recipient.getCurrency(), 
                 sender.getCurrency(),
                 recipientAmount);
         
-        MoneyTransaction transaction = new MoneyTransaction(
+        MoneyTransactionDTO transaction = new MoneyTransactionDTO(
                 sender, 
                 recipient, 
                 senderAmount,
                 recipientAmount);
         
-        em.persist(transaction);
+        mt.save(transaction);
     }
     
     public void acceptPendingTransaction(Long transactionId) {
-        MoneyTransaction transaction = em.find(
-                MoneyTransaction.class, 
-                transactionId);
-        
+        MoneyTransactionDTO transaction = mt.get(transactionId);
         completeTransaction(transaction);
     }
     
     public void declinePendingTransaction(Long transactionId) {
-        MoneyTransaction transaction = em.find(
-            MoneyTransaction.class, 
-            transactionId);
-        
-        em.remove(transaction);
+        MoneyTransactionDTO transaction = mt.get(transactionId);
+        mt.delete(transaction);
     }
     
-    public List<MoneyTransaction> getTransactions(String username) {
-        Query query = em.createNamedQuery("MoneyTransaction.byUsername");
-        query.setParameter("username", username);
-        return query.getResultList();
+    public List<MoneyTransactionDTO> getTransactions(String username) {
+        return mt.get(username);
     }
     
-    public List<MoneyTransaction> getOutgoingTransactions(String username) {
-        Query query = em.createNamedQuery("MoneyTransaction.outgoingByUsername");
-        query.setParameter("username", username);
-        return query.getResultList();
+    public List<MoneyTransactionDTO> getOutgoingTransactions(String username) {
+        return mt.outgoing(username);
     }
     
-    public List<MoneyTransaction> getIncomingTransactions(String username) {
-        Query query = em.createNamedQuery("MoneyTransaction.incomingByUsername");
-        query.setParameter("username", username);
-        return query.getResultList();
+    public List<MoneyTransactionDTO> getIncomingTransactions(String username) {
+        return mt.incoming(username);
     }
     
-    private void completeTransaction(MoneyTransaction transaction) {
-        SystemUser recipient = transaction.getRecipient();
-        SystemUser sender = transaction.getSender();
+    private void completeTransaction(MoneyTransactionDTO transaction) {
+        SystemUserDetailsDTO recipient = transaction.getRecipient();
+        SystemUserDetailsDTO sender = transaction.getSender();
         
         if(sender.getBalance() >= transaction.getSenderAmount()) {
             sender.setBalance(
@@ -110,9 +91,13 @@ import javax.persistence.Query;
                     recipient.getBalance() + transaction.getRecipientAmount());
             transaction.setPending(false);
 
-            em.persist(sender);
-            em.persist(recipient);
-            em.persist(transaction);
+            su.update(sender);
+            su.update(recipient);
+            if(transaction.getId() == null) {
+                mt.save(transaction);
+            } else {
+                mt.update(transaction);
+            }
         }
     }
 }

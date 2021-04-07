@@ -1,7 +1,8 @@
 package com.pay.fakepay.ejb;
 
 import com.pay.fakepay.Currency;
-import com.pay.fakepay.entity.SystemUserGroup;
+import com.pay.fakepay.entity.dao.SystemUserGroupDAO;
+import com.pay.fakepay.entity.dto.SystemUserGroupDTO;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -12,12 +13,12 @@ import javax.persistence.Query;
 
 @Startup
 @Singleton public class AdministratorCreateService {
-    
-    @PersistenceContext
-    EntityManager em;
-    
+
     @EJB
     UserService userService;
+
+    @EJB
+    SystemUserGroupDAO sug;
     
     public static String adminUser = "admin1";
     
@@ -40,8 +41,8 @@ import javax.persistence.Query;
                 password, 
                 "", "", Currency.GBP);
 
-        SystemUserGroup sysUserGroup = new SystemUserGroup(
-                username, "admins");
-        em.persist(sysUserGroup);
+        SystemUserGroupDTO userGroup = 
+                new SystemUserGroupDTO(username, "admins");
+        sug.save(userGroup);
     }
 }
