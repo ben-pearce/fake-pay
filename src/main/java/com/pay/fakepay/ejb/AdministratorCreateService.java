@@ -7,9 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 @Startup
 @Singleton public class AdministratorCreateService {
@@ -26,11 +23,7 @@ import javax.persistence.Query;
     
     @PostConstruct
     public void init() {
-        Query query = em.createNamedQuery("SystemUser.countByName");
-        query.setParameter("username", adminUser);
-        Long count = (Long) query.getSingleResult();
-
-        if(count.equals(0L)) {
+        if(!userService.userExists(adminUser)) {
             create(adminUser, adminPassword);
         }
     }
