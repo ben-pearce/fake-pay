@@ -1,5 +1,6 @@
 package com.pay.fakepay.entity;
 
+import com.pay.fakepay.entity.dto.MoneyTransactionDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -135,6 +136,21 @@ public class MoneyTransaction implements Serializable {
 
     public void setPending(boolean pending) {
         this.pending = pending;
+    }
+
+    public MoneyTransactionDTO getMoneyTransactionData() {
+        return createMoneyTransaction();
+    }
+    
+    private MoneyTransactionDTO createMoneyTransaction() {
+        return new MoneyTransactionDTO(
+                getId(), 
+                getSender().getSystemUserDetailsData(), 
+                getRecipient().getSystemUserDetailsData(), 
+                getSenderAmount(), 
+                getRecipientAmount(), 
+                getCreatedOn(),
+                isPending());
     }
 
     @Override
