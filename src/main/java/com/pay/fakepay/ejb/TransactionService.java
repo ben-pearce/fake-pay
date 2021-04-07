@@ -21,6 +21,9 @@ import static javax.ejb.TransactionAttributeType.REQUIRED;
     @EJB
     MoneyTransactionDAO mt;
     
+    @EJB
+    TimeService timeService;
+    
     public TransactionService() { }
     
     public void makePayment(String from, String to, float senderAmount) {
@@ -36,7 +39,8 @@ import static javax.ejb.TransactionAttributeType.REQUIRED;
                 sender, 
                 recipient, 
                 senderAmount, 
-                recipientAmount);
+                recipientAmount, 
+                timeService.get());
         completeTransaction(transaction);
     }
     
@@ -52,9 +56,9 @@ import static javax.ejb.TransactionAttributeType.REQUIRED;
         MoneyTransactionDTO transaction = new MoneyTransactionDTO(
                 sender, 
                 recipient, 
-                senderAmount,
-                recipientAmount);
-        
+                senderAmount, 
+                recipientAmount, 
+                timeService.get());
         mt.save(transaction);
     }
     
